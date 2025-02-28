@@ -8,6 +8,9 @@ from abc import ABC, abstractmethod
 
 from torch.nn import Module
 
+from model_trainer.src.config import CONTEXT
+from model_trainer.lib.logger import create_logger
+
 
 class ModelABC(ABC, Module):
     """
@@ -23,8 +26,11 @@ class ModelABC(ABC, Module):
 # Self-test
 if __name__ == "__main__":
 
+    logger = create_logger(CONTEXT["log_level"])
     try:
         model = ModelABC()
     except TypeError as exc_type:
-        print("Caught expected TypeError. Printing contents of TypeError exception...")
-        print(exc_type)
+        logger.error(
+            "Caught expected TypeError. Printing contents of TypeError exception..."
+        )
+        logger.error(exc_type)
